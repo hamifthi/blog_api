@@ -13,30 +13,26 @@ func NewBlogRepository(db *gorm.DB) *BlogRepository {
 	return &BlogRepository{db}
 }
 
-func (r *BlogRepository) Create(b *entity.Blog) error {
-	return r.db.Create(b).Error
+func (r *BlogRepository) Create(blog *entity.Blog) (uint, error) {
+	result := r.db.Create(blog)
+	if err := result.Error; err != nil {
+		return 0, err
+	}
+	return blog.ID, nil
 }
 
-func (r *BlogRepository) GetByID() (entity.Blog, error) {
+func (r *BlogRepository) GetByID(id uint) (*entity.Blog, error) {
 	var blog entity.Blog
-	if err := r.db.First(&blog).Error; err != nil {
-		return blog, err
+	if err := r.db.Preload("Author").First(&blog, id).Error; err != nil {
+		return nil, err
 	}
-	return blog, nil
+	return &blog, nil
 }
 
-func (r *BlogRepository) GetAll() ([]entity.Blog, error) {
-	var blogs []entity.Blog
-	if err := r.db.Find(&blogs).Error; err != nil {
-		return blogs, err
-	}
-	return blogs, nil
+func (r *BlogRepository) Update(blog *entity.Blog) error {
+	return r.db.Save(blog).Error
 }
 
-func (r *BlogRepository) Update(b *entity.Blog) error {
-	return r.db.Save(b).Error
-}
-
-func (r *BlogRepository) Delete(b *entity.Blog) error {
-	return r.db.Delete(b).Error
+func (r *BlogRepository) Delete(blog *entity.Blog) error {
+	return r.db.Delete(blog).Error
 }
