@@ -1,4 +1,4 @@
-package config
+package conf
 
 import "github.com/spf13/viper"
 
@@ -9,6 +9,7 @@ type Config struct {
 		User     string
 		Password string
 		DBName   string
+		SSLMode  string
 	}
 }
 

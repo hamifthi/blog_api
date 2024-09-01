@@ -3,16 +3,16 @@ package service
 import (
 	"errors"
 	"personal_blog/entity"
-	"personal_blog/logger"
+	"personal_blog/log"
 	"personal_blog/repository"
 )
 
 type UserService struct {
 	userRepository repository.UserRepository
-	logger         logger.Logger
+	logger         log.Logger
 }
 
-func NewUserService(userRepository repository.UserRepository, logger logger.Logger) *UserService {
+func NewUserService(userRepository repository.UserRepository, logger log.Logger) *UserService {
 	return &UserService{userRepository: userRepository, logger: logger}
 }
 

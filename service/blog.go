@@ -3,16 +3,16 @@ package service
 import (
 	"errors"
 	"personal_blog/entity"
-	"personal_blog/logger"
+	"personal_blog/log"
 	"personal_blog/repository"
 )
 
 type BlogService struct {
 	blogRepository repository.Blog
-	logger         logger.Logger
+	logger         log.Logger
 }
 
-func NewBlogService(blogRepository repository.Blog, logger logger.Logger) *BlogService {
+func NewBlogService(blogRepository repository.Blog, logger log.Logger) *BlogService {
 	return &BlogService{blogRepository: blogRepository, logger: logger}
 }
 

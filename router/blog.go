@@ -4,16 +4,16 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"personal_blog/entity"
-	"personal_blog/logger"
+	"personal_blog/log"
 	"personal_blog/service"
 )
 
 type BlogRouter struct {
 	blogService *service.BlogService
-	logger      logger.Logger
+	logger      log.Logger
 }
 
-func NewBlogRouter(blogService *service.BlogService, logger logger.Logger) *BlogRouter {
+func NewBlogRouter(blogService *service.BlogService, logger log.Logger) *BlogRouter {
 	return &BlogRouter{
 		blogService: blogService,
 		logger:      logger,
