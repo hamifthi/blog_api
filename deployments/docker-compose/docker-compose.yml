@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # PostgreSQL service
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  data:
+    driver: local  # Default driver, can be customized if needed

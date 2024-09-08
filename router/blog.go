@@ -9,11 +9,11 @@ import (
 )
 
 type BlogRouter struct {
-	blogService *service.BlogService
+	blogService service.Blog
 	logger      log.Logger
 }
 
-func NewBlogRouter(blogService *service.BlogService, logger log.Logger) *BlogRouter {
+func NewBlogRouter(blogService service.Blog, logger log.Logger) *BlogRouter {
 	return &BlogRouter{
 		blogService: blogService,
 		logger:      logger,
@@ -40,7 +40,7 @@ func (router *BlogRouter) Create(ctx echo.Context) error {
 		router.logger.Error("bind blog error", err)
 		return BadRequestError("invalid blog data")
 	}
-	err := router.blogService.CreateBlog(&blog)
+	err := router.blogService.Create(&blog)
 	if err != nil {
 		router.logger.Error("create new blog error", err)
 		return InternalServerError("create blog has an internal error")
@@ -60,7 +60,7 @@ func (router *BlogRouter) Update(ctx echo.Context) error {
 		return InternalServerError("update blog has an internal error")
 	}
 	blog.ID = uintID
-	err = router.blogService.UpdateBlog(&blog)
+	err = router.blogService.Update(&blog)
 	if err != nil {
 		router.logger.Error("update blog error", err)
 		return BadRequestError("invalid blog data")
@@ -74,7 +74,7 @@ func (router *BlogRouter) Delete(ctx echo.Context) error {
 		router.logger.Error("convert string to uint64 error", err)
 		return InternalServerError("delete blog has an internal error")
 	}
-	err = router.blogService.DeleteBlog(uintID)
+	err = router.blogService.Delete(uintID)
 	if err != nil {
 		router.logger.Error("delete blog error", err)
 		return InternalServerError("delete blog has an internal error")

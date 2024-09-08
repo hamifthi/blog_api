@@ -8,11 +8,11 @@ import (
 )
 
 type UserService struct {
-	userRepository repository.UserRepository
+	userRepository repository.User
 	logger         log.Logger
 }
 
-func NewUserService(userRepository repository.UserRepository, logger log.Logger) *UserService {
+func NewUserService(userRepository repository.User, logger log.Logger) *UserService {
 	return &UserService{userRepository: userRepository, logger: logger}
 }
 
@@ -29,7 +29,7 @@ func (us *UserService) FindByID(id uint) (*entity.User, error) {
 	return user, nil
 }
 
-func (us *UserService) CreateUser(user *entity.User) error {
+func (us *UserService) Create(user *entity.User) error {
 	if err := validateUser(user.Name, user.Email); err != nil {
 		us.logger.Error("error in user validation: ", err, user)
 		return err
@@ -42,7 +42,7 @@ func (us *UserService) CreateUser(user *entity.User) error {
 	return nil
 }
 
-func (us *UserService) UpdateUser(user *entity.User) error {
+func (us *UserService) Update(user *entity.User) error {
 	if validateName(user.Name) == false {
 		us.logger.Error("invalid user name: ", user)
 		return errors.New("invalid user name")
@@ -60,7 +60,7 @@ func (us *UserService) UpdateUser(user *entity.User) error {
 	return nil
 }
 
-func (us *UserService) DeleteUser(id uint) error {
+func (us *UserService) Delete(id uint) error {
 	user, err := us.FindByID(id)
 	if err != nil {
 		us.logger.Error("facing error while deleting user by ID: ", err, id)

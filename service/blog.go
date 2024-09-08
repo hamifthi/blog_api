@@ -29,7 +29,7 @@ func (bs *BlogService) FindByID(id uint) (*entity.Blog, error) {
 	return blog, nil
 }
 
-func (bs *BlogService) CreateBlog(blog *entity.Blog) error {
+func (bs *BlogService) Create(blog *entity.Blog) error {
 	if err := validateBlog(blog.Title, blog.Content, blog.AuthorID); err != nil {
 		bs.logger.Error("error in blog validation: ", err, blog)
 		return err
@@ -43,8 +43,7 @@ func (bs *BlogService) CreateBlog(blog *entity.Blog) error {
 	return nil
 }
 
-// UpdateBlog updates an existing blog post.
-func (bs *BlogService) UpdateBlog(blog *entity.Blog) error {
+func (bs *BlogService) Update(blog *entity.Blog) error {
 	// Validate input
 	if err := validateBlog(blog.Title, blog.Content, blog.AuthorID); err != nil {
 		bs.logger.Error("facing error while validating blog by ID: ", err, blog)
@@ -65,8 +64,7 @@ func (bs *BlogService) UpdateBlog(blog *entity.Blog) error {
 	return nil
 }
 
-// DeleteBlog deletes a blog post by its ID.
-func (bs *BlogService) DeleteBlog(id uint) error {
+func (bs *BlogService) Delete(id uint) error {
 	blog, err := bs.FindByID(id)
 	if err != nil {
 		bs.logger.Error("facing error while deleting blog by ID: ", err, id)
